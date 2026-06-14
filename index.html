@@ -251,6 +251,24 @@
     line-height: 1.85;
   }
 
+  /* ---- Trailer ---- */
+  .trailer-wrap {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+  }
+  .trailer-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
   /* ---- Screenshots gallery ---- */
   .gallery {
     display: grid;
@@ -543,6 +561,23 @@
   <h2 class="tr">Kısa Açıklama</h2>
   <p class="en">PSYCHOBYL is an auto-battler / idle / extraction / RPG hybrid set in the Chernobyl Zone in the year 2084. Every death reincarnates you through Genesis. Push deeper, layer by layer, through an endless lattice of consciousness — and try to survive the Zone.</p>
   <p class="tr">PSYCHOBYL, 2084 yılında Chernobyl Bölgesi'nde geçen bir auto-battler / idle / extraction / RPG karışımıdır. Her ölüm seni Genesis ile yeniden doğurur. İlerledikçe bitmek bilmeyen farkındalık katmanlarını aşarak Bölge'de hayatta kalmaya çalışırsın.</p>
+</section>
+
+<!-- ============ TRAILER ============ -->
+<section>
+  <h2 class="en">Trailer</h2>
+  <h2 class="tr">Fragman</h2>
+  <div class="trailer-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/9I5CJayPe7k"
+      title="PSYCHOBYL Trailer"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+  <p style="margin-top: 14px; text-align: center;">
+    <a href="https://youtu.be/9I5CJayPe7k" target="_blank">Watch on YouTube ↗</a>
+  </p>
 </section>
 
 <!-- ============ FEATURES ============ -->
