@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSYCHOBYL — Press Kit</title>
+<meta property="og:title" content="PSYCHOBYL — Press Kit">
+<meta property="og:description" content="An auto-battler / idle / extraction / RPG hybrid set in the Chernobyl Zone in 2084.">
+<meta property="og:image" content="assets/branding/main_capsule_1232x706.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-main: #020300;
+    --bg-panel: #050802;
+    --bg-card: #090C05;
+    --bg-elevated: #10160A;
+    --border: #1a2614;
+    --border-strong: #2a3a1f;
+
+    --fg: #d8ddd0;
+    --fg-dim: #8a9685;
+    --fg-bright: #f0f3ea;
+
+    --accent: #58A538;
+    --accent-dim: #457836;
+    --accent-muted: #315524;
+    --accent-glow: rgba(88, 165, 56, 0.18);
+
+    --font-display: 'Inter', system-ui, sans-serif;
+    --font-tactical: 'Inter', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+    --font-mono: 'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-main);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+    overflow-x: hidden;
+  }
+
+  body.loaded { opacity: 1; }
+
+  ::selection { background: var(--accent); color: var(--bg-main); }
+
+  /* ---- CRT scanline subtle effect ---- */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(88, 165, 56, 0.015) 0px,
+      rgba(88, 165, 56, 0.015) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 1000;
+    mix-blend-mode: overlay;
+  }
+
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    height: 75vh;
+    min-height: 520px;
+    background: url("assets/branding/library_hero_3840x1240.jpg") center/cover;
+    display: flex;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(2,3,0,0.5) 0%, transparent 30%, var(--bg-main) 100%),
+      linear-gradient(to right, rgba(2,3,0,0.3) 0%, transparent 50%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 48px 64px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    color: var(--fg-bright);
+    letter-spacing: 0.14em;
+    margin-bottom: 18px;
+    text-shadow: 0 0 50px var(--accent-glow), 0 0 100px var(--accent-glow);
+    line-height: 1;
+  }
+  .hero .tagline {
+    color: var(--accent);
+    font-family: var(--font-tactical);
+    font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    max-width: 760px;
+    line-height: 1.6;
+  }
+
+  /* ---- Language toggle ---- */
+  .lang-toggle {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    gap: 2px;
+    background: rgba(2, 3, 0, 0.85);
+    border: 1px solid var(--border-strong);
+    padding: 4px;
+    backdrop-filter: blur(8px);
+  }
+  .lang-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--fg-dim);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: var(--font-tactical);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    transition: all 0.25s ease;
+  }
+  .lang-toggle button:hover { color: var(--fg); }
+  .lang-toggle button.active {
+    background: var(--accent);
+    color: var(--bg-main);
+  }
+
+  /* ---- Main container ---- */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 90px 48px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h2 {
+    font-family: var(--font-tactical);
+    color: var(--accent);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  h2::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 70px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: var(--fg);
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  strong { color: var(--accent); font-weight: 600; }
+
+  a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--fg-bright); text-decoration: underline; }
+
+  /* ---- Fact sheet ---- */
+  .factsheet {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px 32px;
+    background: var(--bg-panel);
+    padding: 36px 40px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+  }
+  .factsheet dt {
+    color: var(--fg-dim);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .factsheet dd {
+    color: var(--fg);
+    font-size: 1rem;
+    font-family: var(--font-body);
+  }
+
+  /* ---- Features list ---- */
+  .features { list-style: none; margin: 24px 0; }
+  .features li {
+    background: var(--bg-panel);
+    padding: 20px 26px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    transition: all 0.25s ease;
+    font-size: 1.02rem;
+  }
+  .features li:hover {
+    border-left-color: var(--fg-bright);
+    background: var(--bg-card);
+    transform: translateX(4px);
+  }
+
+  /* ---- Lore ---- */
+  .lore p {
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  /* ---- Screenshots gallery ---- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 20px;
+    margin-top: 28px;
+  }
+  .gallery figure {
+    margin: 0;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .gallery .img-wrap {
+    position: relative;
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .gallery img {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery figure:hover {
+    border-color: var(--accent);
+  }
+  .gallery figure:hover img {
+    transform: scale(1.03);
+  }
+  .gallery .download-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(2, 3, 0, 0.85);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(6px);
+  }
+  .gallery figure:hover .download-btn {
+    opacity: 1;
+  }
+  .gallery .download-btn:hover {
+    background: var(--accent);
+    color: var(--bg-main);
+    text-decoration: none;
+  }
+  .gallery figcaption {
+    padding: 14px 18px;
+    color: var(--fg-dim);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---- Lightbox ---- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .lightbox.active {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 80px rgba(88, 165, 56, 0.25);
+  }
+  .lightbox .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(2, 3, 0, 0.85);
+    border: 1px solid var(--border-strong);
+    color: var(--fg);
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .lightbox .lightbox-close:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .lightbox .lightbox-download {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(2, 3, 0, 0.85);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .lightbox .lightbox-download:hover {
+    background: var(--accent);
+    color: var(--bg-main);
+  }
+  body.lightbox-open { overflow: hidden; }
+
+  /* ---- Team section ---- */
+  .team-roster {
+    list-style: none;
+    margin: 18px 0 26px;
+  }
+  .team-roster li {
+    padding: 10px 0;
+    color: var(--fg);
+    font-size: 1.02rem;
+  }
+  .team-roster strong {
+    color: var(--accent);
+    font-family: var(--font-tactical);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---- Contact ---- */
+  .contact-box {
+    background: var(--bg-panel);
+    padding: 44px;
+    border: 1px solid var(--border-strong);
+    text-align: center;
+  }
+  .contact-box .label {
+    font-family: var(--font-mono);
+    color: var(--fg-dim);
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .contact-box .email {
+    font-family: var(--font-tactical);
+    color: var(--accent);
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    cursor: default;
+    user-select: text;
+  }
+  .contact-box .note {
+    color: var(--fg);
+    margin-top: 22px;
+    font-size: 0.98rem;
+  }
+  .contact-box .steam-link {
+    margin-top: 18px;
+    display: inline-block;
+    font-family: var(--font-tactical);
+    letter-spacing: 0.1em;
+    font-size: 0.95rem;
+    padding: 10px 24px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    transition: all 0.25s ease;
+  }
+  .contact-box .steam-link:hover {
+    background: var(--accent);
+    color: var(--bg-main);
+    text-decoration: none;
+  }
+
+  /* ---- Language toggle visibility ---- */
+  .tr { display: none; }
+  body.lang-tr .en { display: none; }
+  body.lang-tr .tr { display: block; }
+
+  /* Inline EN/TR for dt/dd in factsheet */
+  body.lang-tr dt.en, body.lang-tr dd.en { display: none; }
+  body.lang-en dt.tr, body.lang-en dd.tr { display: none; }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    padding: 52px 24px;
+    color: var(--fg-dim);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .container { padding: 60px 24px; }
+    .hero-content { padding: 0 24px 44px; }
+    .factsheet { grid-template-columns: 1fr; gap: 4px 0; padding: 28px; }
+    .factsheet dt { margin-top: 16px; padding-top: 0; }
+    .gallery { grid-template-columns: 1fr; }
+    .lang-toggle { top: 16px; right: 16px; }
+    .contact-box { padding: 28px; }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<div class="lang-toggle">
+  <button onclick="setLang('en')" class="active" id="btn-en">EN</button>
+  <button onclick="setLang('tr')" id="btn-tr">TR</button>
+</div>
+
+<header class="hero">
+  <div class="hero-content">
+    <h1>PSYCHOBYL</h1>
+    <p class="tagline en">An auto-battler / idle / extraction / RPG set in the Chernobyl Zone, 2084</p>
+    <p class="tagline tr">2084 Chernobyl Bölgesi'nde geçen bir auto-battler / idle / extraction / RPG</p>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- ============ FACT SHEET ============ -->
+<section>
+  <h2 class="en">Fact Sheet</h2>
+  <h2 class="tr">Künye</h2>
+  <dl class="factsheet">
+    <dt class="en">Developer</dt><dt class="tr">Geliştirici</dt>
+    <dd>Boisha Games (Boris &amp; Baisha)</dd>
+
+    <dt class="en">Publisher</dt><dt class="tr">Yayıncı</dt>
+    <dd>Boisha Games</dd>
+
+    <dt class="en">Platform</dt><dt class="tr">Platform</dt>
+    <dd>Steam (Windows) — macOS / Linux post-launch</dd>
+
+    <dt class="en">Genres</dt><dt class="tr">Türler</dt>
+    <dd class="en">Auto-battler, Idle, Extraction, RPG, Survival, Atmospheric</dd>
+    <dd class="tr">Auto-battler, Idle, Extraction, RPG, Survival, Atmosferik</dd>
+
+    <dt class="en">Release</dt><dt class="tr">Çıkış</dt>
+    <dd class="en">Early Access — August 2026</dd>
+    <dd class="tr">Early Access — Ağustos 2026</dd>
+
+    <dt class="en">Price</dt><dt class="tr">Fiyat</dt>
+    <dd class="en">EA $5 / Full Release $8</dd>
+    <dd class="tr">EA $5 / Tam Çıkış $8</dd>
+
+    <dt class="en">Languages</dt><dt class="tr">Diller</dt>
+    <dd class="en">English, Turkish (at launch)</dd>
+    <dd class="tr">İngilizce, Türkçe (launch'ta)</dd>
+
+    <dt class="en">Players</dt><dt class="tr">Oyuncu Sayısı</dt>
+    <dd class="en">Single-player only</dd>
+    <dd class="tr">Yalnızca tek oyunculu</dd>
+
+    <dt class="en">Engine</dt><dt class="tr">Engine</dt>
+    <dd>Electron + React + TypeScript</dd>
+
+    <dt class="en">Steam Page</dt><dt class="tr">Steam Sayfası</dt>
+    <dd><a href="https://store.steampowered.com/app/4514090/PSYCHOBYL/" target="_blank">store.steampowered.com/app/4514090</a></dd>
+  </dl>
+</section>
+
+<!-- ============ HOOK ============ -->
+<section>
+  <h2 class="en">Elevator Pitch</h2>
+  <h2 class="tr">Kısa Açıklama</h2>
+  <p class="en">PSYCHOBYL is an auto-battler / idle / extraction / RPG hybrid set in the Chernobyl Zone in the year 2084. Every death reincarnates you through Genesis. Push deeper, layer by layer, through an endless lattice of consciousness — and try to survive the Zone.</p>
+  <p class="tr">PSYCHOBYL, 2084 yılında Chernobyl Bölgesi'nde geçen bir auto-battler / idle / extraction / RPG karışımıdır. Her ölüm seni Genesis ile yeniden doğurur. İlerledikçe bitmek bilmeyen farkındalık katmanlarını aşarak Bölge'de hayatta kalmaya çalışırsın.</p>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section>
+  <h2 class="en">Key Features</h2>
+  <h2 class="tr">Temel Özellikler</h2>
+  <ul class="features en">
+    <li><strong>Turn-based wave combat</strong> — auto-battler style; decisions over reflexes</li>
+    <li><strong>Real extraction tension</strong> — any loot you fail to extract from the Zone is permanently lost</li>
+    <li><strong>A genuine idle layer</strong> — your Stalker keeps scavenging the Zone even when you're offline</li>
+    <li><strong>Upgrade your hideout</strong> with materials gathered from the Zone, build toward the playstyle you want, and grow stronger with every run</li>
+    <li><strong>The Genesis prestige loop</strong> — die, return, grow stronger, push further into the Zone. Single-player. No microtransactions. No FOMO. No live-service.</li>
+  </ul>
+  <ul class="features tr">
+    <li><strong>Sıra tabanlı dalga savaşı</strong> — refleks değil, karar verme yeteneğine dayalı auto-battler tarzı combat</li>
+    <li><strong>Gerçek bir extraction gerilimi</strong> — Bölge'den çıkartmadığın loot kalıcı olarak kaybolur</li>
+    <li><strong>Otantik idle katmanı</strong> — sen çevrimdışıyken bile Stalker'ın Bölge'yi taramaya, loot toplamaya devam eder</li>
+    <li><strong>Bölge'den topladığın farklı materyaller ile sığınağını geliştir</strong>, odaklanmak istediğin build'i kur ve her seferinde daha da güçlen</li>
+    <li><strong>Genesis prestige döngüsü</strong> — öl, geri dön, daha güçlü hale gel, Bölge'nin daha derinine in. Tek oyunculu. Mikro işlem yok. FOMO yok. Live-service yok.</li>
+  </ul>
+</section>
+
+<!-- ============ LORE ============ -->
+<section class="lore">
+  <h2 class="en">Setting &amp; Story</h2>
+  <h2 class="tr">Atmosfer ve Hikaye</h2>
+  <div class="en">
+    <p><strong>The year is 2084.</strong> The Chernobyl Zone detonated a second time — but this time, what spread wasn't just radiation. <strong>Consciousness spread with it.</strong> Every mind that crosses into the Zone is shattered, then reshaped. They call it <strong>Genesis</strong>.</p>
+    <p>You are a <strong>Stalker</strong>. The Zone is calling you — because your soul is its missing piece.</p>
+    <p>You scrape by inside a brutal economy ruled by anomalies and artifacts. You raid for loot among mutants, bandits, and the Monolith factions. You bring back what you can salvage from the Zone, upgrade your hideout, and lean into the build you want to grow with — stronger with every return.</p>
+    <p>Take a breath in the hideout. Recover. Pick up quests from traders, sell salvaged weapons, earn reputation. Organize your inventory, choose from 15+ different maps, plan your skill tree, craft new gear, and prepare your character for the next raid. Move carelessly and you'll lose everything you've earned — <strong>the Zone shows no mercy.</strong></p>
+    <p>Death is not the end. Death is part of the feedback loop. <strong>The Zone breaks you in order to build you.</strong></p>
+  </div>
+  <div class="tr">
+    <p><strong>Yıl 2084.</strong> Chernobyl Bölgesi ikinci kez patladı — ama bu sefer yayılan sadece radyasyon değildi. <strong>Bilinç de yayıldı.</strong> Bölge'ye giren her zihin önce parçalanıyor, sonra yeniden şekilleniyor. Buna "<strong>Genesis</strong>" diyorlar.</p>
+    <p>Sen bir <strong>Stalker'sın</strong>. Bölge seni çağırıyor — çünkü ruhun, onun son eksik parçası.</p>
+    <p>Anomalilere ve artifaktlara yön veren acımasız bir ekonomide hayatta kalmaya çalışırsın. Mutantlar, haydutlar ve Dikitaş fraksiyonları arasında loot için ölümüne baskınlar yaparsın. Bölge'den topladığın farklı materyallerle sığınağını geliştirir, odaklanmak istediğin build'i kurar, her seferinde daha da güçlenirsin.</p>
+    <p>Sığınağında soluklan, dinlen, canını yenile. Tüccarlardan görev al, silah sat, saygınlık kazan. Envanterini düzenle, 15+ farklı harita arasında seçim yap, yeteneklerini diz ve yeni eşyalar üreterek bir sonraki baskınına karakterini hazırla. Dikkatli oynamazsan kazandıklarını kaybedersin — <strong>Bölge gözünün yaşına bakmaz.</strong></p>
+    <p>Her ölüm son değildir. Ölüm, geri besleme döngüsünün bir parçasıdır. <strong>Bu Bölge seni kırarak inşa eder.</strong></p>
+  </div>
+</section>
+
+<!-- ============ SCREENSHOTS ============ -->
+<section>
+  <h2 class="en">Screenshots</h2>
+  <h2 class="tr">Ekran Görüntüleri</h2>
+  <div class="gallery">
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/raid_overview.png', 'psychobyl_raid_overview.png')">
+        <img src="assets/screenshots/raid_overview.png" alt="Raid selection screen" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/raid_overview.png" download="psychobyl_raid_overview.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Raid Selection — Industrial Ruins</figcaption>
+      <figcaption class="tr">Baskın Seçimi — Endüstriyel Harabeler</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/raid_combat.png', 'psychobyl_raid_combat.png')">
+        <img src="assets/screenshots/raid_combat.png" alt="Active raid combat" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/raid_combat.png" download="psychobyl_raid_combat.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Active Raid — Turn-Based Wave Combat</figcaption>
+      <figcaption class="tr">Aktif Baskın — Sıra Tabanlı Dalga Savaşı</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/stalker_inventory.png', 'psychobyl_stalker.png')">
+        <img src="assets/screenshots/stalker_inventory.png" alt="Stalker character and inventory" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/stalker_inventory.png" download="psychobyl_stalker.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Stalker — Character &amp; Inventory</figcaption>
+      <figcaption class="tr">Stalker — Karakter ve Envanter</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/hideout.png', 'psychobyl_hideout.png')">
+        <img src="assets/screenshots/hideout.png" alt="Hideout upgrade system" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/hideout.png" download="psychobyl_hideout.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Hideout — Upgrade Facilities</figcaption>
+      <figcaption class="tr">Sığınak — Yükseltme Tesisleri</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/crafting.png', 'psychobyl_crafting.png')">
+        <img src="assets/screenshots/crafting.png" alt="Crafting interface" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/crafting.png" download="psychobyl_crafting.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Crafting — Weapon Parts</figcaption>
+      <figcaption class="tr">Üretim — Silah Parçaları</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/trader.png', 'psychobyl_trader.png')">
+        <img src="assets/screenshots/trader.png" alt="Trader interface" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/trader.png" download="psychobyl_trader.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Trader — Zero the Engineer</figcaption>
+      <figcaption class="tr">Tüccar — Mühendis Zero</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/watch_post.png', 'psychobyl_watch_post.png')">
+        <img src="assets/screenshots/watch_post.png" alt="Watch Post" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/watch_post.png" download="psychobyl_watch_post.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Watch Post — Rest &amp; Military Radar</figcaption>
+      <figcaption class="tr">Nöbet Postası — Dinlenme ve Askeri Radar</figcaption>
+    </figure>
+    <figure>
+      <div class="img-wrap" onclick="openLightbox('assets/screenshots/perks.png', 'psychobyl_perks.png')">
+        <img src="assets/screenshots/perks.png" alt="Perk tree" loading="lazy">
+        <a class="download-btn" href="assets/screenshots/perks.png" download="psychobyl_perks.png" onclick="event.stopPropagation()">Download</a>
+      </div>
+      <figcaption class="en">Perks — Combat / Survival / Fortune / Anomaly / Idle</figcaption>
+      <figcaption class="tr">Yetenekler — Combat / Survival / Fortune / Anomaly / Idle</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section>
+  <h2 class="en">Team</h2>
+  <h2 class="tr">Ekip</h2>
+  <div class="en">
+    <p><strong>PSYCHOBYL is Boisha Games' debut title.</strong> We are a two-person team:</p>
+    <ul class="team-roster">
+      <li><strong>Boris</strong> — solo developer, handling the entire technical side (code, system design, build, deployment)</li>
+      <li><strong>Baisha</strong> — co-creator and design partner, driving ideation, balance, playtesting, and design decisions</li>
+    </ul>
+    <p>PSYCHOBYL began as a love letter to the <strong>atmosphere of the S.T.A.L.K.E.R. series</strong> — but reimagined inside a totally different genre mash-up. Reproducing the Zone's claustrophobic FPS experience as a solo developer wasn't realistic; instead, we adapted it into a <strong>turn-based extraction RPG focused on decisions and economy</strong>. The idle layer is a nod to players coming home tired from work: open the game, see what your Stalker brought back while you were offline, head into the next raid.</p>
+    <p>Across 4 months of development, <strong>we used AI as a tool throughout the pipeline</strong> — Cursor + Claude for code assistance, generative AI for marketing visuals and some in-game art. <strong>Game design, mechanics, balance, lore, UI/UX, and overall direction are entirely ours</strong> (full disclosure on the Steam page).</p>
+  </div>
+  <div class="tr">
+    <p><strong>PSYCHOBYL, Boisha Games'in ilk oyunu.</strong> İki kişilik bir ekibiz:</p>
+    <ul class="team-roster">
+      <li><strong>Boris</strong> — solo geliştirici, tüm teknik tarafı yürütüyor (kod, sistem tasarımı, build, deploy)</li>
+      <li><strong>Baisha</strong> — co-creator ve tasarım partneri, fikir geliştirme, dengeleme, oyun testi ve tasarım kararları</li>
+    </ul>
+    <p>PSYCHOBYL'in fikri, <strong>S.T.A.L.K.E.R. serisinin atmosferinden ilham</strong> alarak doğdu — ama tamamen farklı bir tür kombinasyonunda. Solo bir geliştiriciyle Bölge'nin klostrofobik FPS hissini birebir aktarmak imkânsızdı; bunun yerine <strong>kararlar ve ekonomi odaklı, sırayla oynanan bir extraction RPG'ye</strong> yeniden uyarladık. Idle katmanı ise iş çıkışı yorgun oyunculara selam: oyunu açıyorsun, Stalker'ının çevrimdışı olduğun süre boyunca topladığı şeyleri görüyorsun, ardından bir sonraki baskına çıkıyorsun.</p>
+    <p>4 aylık geliştirme sürecinde <strong>AI'ı tüm pipeline boyunca bir araç olarak kullandık</strong> — kod yardımı için Cursor + Claude, marketing görselleri ve bazı in-game asset'ler için generative AI. <strong>Oyun tasarımı, mekanikleri, dengelemesi, lore'u, UI/UX'i ve genel yön tamamen bize ait</strong> (tam beyan Steam sayfasında).</p>
+  </div>
+</section>
+
+<!-- ============ INSPIRATIONS ============ -->
+<section>
+  <h2 class="en">Inspirations</h2>
+  <h2 class="tr">İlham Kaynakları</h2>
+  <ul class="features en">
+    <li><strong>S.T.A.L.K.E.R. series</strong> — the foundation of the Zone's identity and atmosphere</li>
+    <li><strong>Metro Exodus</strong> — the feel of post-Soviet industrial decay</li>
+    <li><strong>Melvor Idle</strong> — referenced only for the structure of the idle layer</li>
+  </ul>
+  <ul class="features tr">
+    <li><strong>S.T.A.L.K.E.R. serisi</strong> — Bölge kimliği ve atmosferin temel kaynağı</li>
+    <li><strong>Metro Exodus</strong> — post-Sovyet endüstriyel çöküş hissi</li>
+    <li><strong>Melvor Idle</strong> — sadece idle katmanının yapısı için referans</li>
+  </ul>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section>
+  <h2 class="en">Contact</h2>
+  <h2 class="tr">İletişim</h2>
+  <div class="contact-box">
+    <div class="label en">Press Contact</div>
+    <div class="label tr">Basın İletişim</div>
+    <div class="email">boisha.gamedev@gmail.com</div>
+    <p class="note en">Free press keys available on request — instant download and play.</p>
+    <p class="note tr">Talep üzerine ücretsiz Steam press key — anında indirip oynayabilirsiniz.</p>
+    <a class="steam-link" href="https://store.steampowered.com/app/4514090/PSYCHOBYL/" target="_blank">STEAM STORE PAGE</a>
+  </div>
+</section>
+
+</main>
+
+<!-- Lightbox overlay (outside main to escape transform context) -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <a class="lightbox-download" id="lightbox-download" href="" download="psychobyl_screenshot.png" onclick="event.stopPropagation()">Download Full Resolution</a>
+</div>
+
+<footer>
+  <p class="en">© 2026 Boisha Games · Press kit updated June 2026</p>
+  <p class="tr">© 2026 Boisha Games · Press kit Haziran 2026 güncellemesi</p>
+</footer>
+
+<script>
+  // Fade in on load
+  window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+  });
+
+  // Language switching with fade
+  function setLang(lang) {
+    document.body.style.transition = 'opacity 0.3s ease';
+    document.body.style.opacity = '0';
+
+    setTimeout(() => {
+      document.body.className = 'lang-' + lang + ' loaded';
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-tr').classList.toggle('active', lang === 'tr');
+      document.body.style.opacity = '1';
+    }, 300);
+  }
+
+  // Reveal sections on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+
+  document.querySelectorAll('section').forEach(s => observer.observe(s));
+
+  // Lightbox functions
+  function openLightbox(src, downloadName) {
+    const lightbox = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const downloadLink = document.getElementById('lightbox-download');
+    img.src = src;
+    downloadLink.href = src;
+    downloadLink.setAttribute('download', downloadName || 'psychobyl_screenshot.png');
+    lightbox.classList.add('active');
+    document.body.classList.add('lightbox-open');
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    document.body.classList.remove('lightbox-open');
+  }
+
+  // ESC to close lightbox
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
