@@ -1,2 +1,2 @@
 # psychobyl-presskit
-PSYCHOBYL — Press Ki
+PSYCHOBYL — Press Kit
